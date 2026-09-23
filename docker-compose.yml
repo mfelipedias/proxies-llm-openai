@@ -1,0 +1,71 @@
+# Open WebUI — front-end unificado para os proxies (qwen/deepseek/glm/minimax).
+#
+# Sobe SÓ o Open WebUI na porta 2999. Os proxies continuam subindo
+# individualmente (cada um no seu diretório, com `docker compose up`).
+#
+#   docker compose up -d        # nesta pasta raiz -> sobe o Open WebUI
+#   acesse:  http://localhost:2999
+#
+# As conexões com os 4 proxies já vêm pré-configuradas (via host.docker.internal,
+# que aponta para o host onde os proxies publicam suas portas 3000-3003).
+# Os modelos de cada proxy aparecem sozinhos (Open WebUI consulta /v1/models).
+#
+# Para mudar URLs/keys sem editar este arquivo, use o .env desta pasta
+# (veja .env.example). Os valores abaixo são os defaults.
+
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    ports:
+      - "2999:8080"
+    extra_hosts:
+      # Garante host.docker.internal no Linux também (no macOS já existe).
+      - "host.docker.internal:host-gateway"
+    environment:
+      # ---- Conexões OpenAI-compatíveis (1 por proxy, alinhadas por índice) ----
+      # Ordem: qwen(3000) ; deepseek(3001) ; glm(3002) ; minimax(3003)
+      OPENAI_API_BASE_URLS: >-
+        ${QWEN_URL:-http://host.docker.internal:3000/v1};${DEEPSEEK_URL:-http://host.docker.internal:3001/v1};${GLM_URL:-http://host.docker.internal:3002/v1};${MINIMAX_URL:-http://host.docker.internal:3003/v1}
+      # Nenhum proxy exige auth (API_KEY vazio nos .env). Placeholder "none" por índice
+      # só p/ manter o alinhamento da lista; o valor é ignorado pelos proxies.
+      OPENAI_API_KEYS: >-
+        ${QWEN_KEY:-none};${DEEPSEEK_KEY:-none};${GLM_KEY:-none};${MINIMAX_KEY:-none}
+
+      # Desliga a API nativa Ollama (usamos só os proxies via OpenAI API).
+      ENABLE_OLLAMA_API: "false"
+
+      # ---- Busca na web (DuckDuckGo: não precisa de API key) ----
+      ENABLE_WEB_SEARCH: "true"
+      ENABLE_RAG_WEB_SEARCH: "true"          # nome antigo da mesma flag (compat)
+      WEB_SEARCH_ENGINE: "duckduckgo"
+      WEB_SEARCH_RESULT_COUNT: "5"
+      WEB_SEARCH_CONCURRENT_REQUESTS: "10"
+      # Permite o modelo carregar/ler URLs que o usuário colar:
+      ENABLE_RAG_WEB_LOADER_SSL_VERIFICATION: "true"
+
+      # ---- Ferramentas extras úteis ----
+      # Code interpreter (executa código gerado pelo modelo, via pyodide no browser):
+      ENABLE_CODE_INTERPRETER: "true"
+      CODE_INTERPRETER_ENGINE: "pyodide"
+      # Geração de título/tags automática das conversas:
+      ENABLE_TAGS_GENERATION: "true"
+      # Permite upload/RAG de documentos:
+      ENABLE_RAG_HYBRID_SEARCH: "true"
+
+      # ---- Conta / sessão ----
+      # Troque por um segredo fixo para não deslogar a cada restart.
+      WEBUI_SECRET_KEY: ${WEBUI_SECRET_KEY:-change-me-please}
+      # Mantém o cadastro aberto (primeiro usuário criado vira admin).
+      ENABLE_SIGNUP: "true"
+    volumes:
+      - open_webui_data:/app/backend/data
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  open_webui_data:

@@ -1,0 +1,48 @@
+# Dependencies (inclui o symlink para o node_modules compartilhado na raiz)
+node_modules
+
+# Build
+dist/
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Database
+data/
+*.db
+*.db-wal
+*.db-shm
+accounts.json
+accounts.json.bak
+
+# Browser profiles (session data)
+minimax_profiles/
+
+# Sessão exportada (credencial portável — NÃO commitar em repo público)
+minimax_session.json
+
+# Logs
+*.log
+
+# Coverage & cache
+coverage/
+.cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE / Editor
+.kilo
+
+# Legacy
+/core/
+
+*.bak
+*.bak.*
+
+# Dump de discovery (pode conter dados de sessão)
+discover-dump.json
+discover-sse.txt

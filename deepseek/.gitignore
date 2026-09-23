@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+
+# Build
+dist/
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Database
+data/
+*.db
+*.db-wal
+*.db-shm
+accounts.json
+accounts.json.bak
+
+# Browser profiles (session data)
+deepseek_profiles/
+
+# Logs
+*.log
+
+# Coverage & cache
+coverage/
+.cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Backups
+*.bak
+*.bak.*

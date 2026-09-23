@@ -1,0 +1,21 @@
+services:
+  minimaxproxy:
+    build: .
+    container_name: minimaxproxy
+    ports:
+      - "${PORT:-3003}:3003"
+    env_file:
+      - .env
+    volumes:
+      - minimax_data:/app/data
+      - minimax_profiles:/app/minimax_profiles
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  minimax_data:
+  minimax_profiles:

@@ -1,0 +1,42 @@
+{
+  "name": "glmproxy",
+  "version": "1.0.0",
+  "description": "Proxy local compatível com OpenAI para GLM (chat.z.ai / Zhipu) via Playwright",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx tsx src/index.ts",
+    "start:firefox": "npx tsx src/index.ts --browser=firefox",
+    "start:chrome": "npx tsx src/index.ts --browser=chrome",
+    "start:edge": "npx tsx src/index.ts --browser=edge",
+    "login": "npx tsx src/login.ts",
+    "login:manual": "npx tsx src/manual-login.ts",
+    "session:export": "npx tsx src/export-session.ts",
+    "login:firefox": "npx tsx src/login.ts --browser=firefox",
+    "login:chrome": "npx tsx src/login.ts --browser=chrome",
+    "login:edge": "npx tsx src/login.ts --browser=edge",
+    "test": "tsx --test src/**/*.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "Pedro Farias",
+  "license": "ISC",
+  "dependencies": {
+    "@hono/node-server": "^2.0.3",
+    "better-sqlite3": "^12.10.0",
+    "dotenv": "^17.4.2",
+    "hono": "^4.12.21",
+    "p-queue": "^9.3.0",
+    "piscina": "^5.1.4",
+    "playwright": "^1.60.0",
+    "tsx": "^4.22.3",
+    "uuid": "^14.0.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^25.9.1",
+    "@types/uuid": "^11.0.0",
+    "typescript": "^6.0.3"
+  },
+  "type": "module"
+}

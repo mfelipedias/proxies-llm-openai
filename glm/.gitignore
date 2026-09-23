@@ -1,0 +1,45 @@
+# Dependencies (inclui o symlink para o node_modules compartilhado na raiz)
+node_modules
+
+# Build
+dist/
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Database
+data/
+*.db
+*.db-wal
+*.db-shm
+accounts.json
+accounts.json.bak
+
+# Browser profiles (session data)
+glm_profiles/
+
+# Logs
+*.log
+
+# Coverage & cache
+coverage/
+.cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE / Editor
+.kilo
+
+# Legacy
+/core/
+
+*.bak
+*.bak.*
+
+# Sessão exportada (token + cookies) — CREDENCIAL DE ACESSO TOTAL À CONTA.
+# NUNCA versionar. Para deploy, copie o arquivo para o servidor (scp/rsync).
+glm_session.json

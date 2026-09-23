@@ -1,0 +1,43 @@
+# Dependencies
+node_modules
+
+# Build
+dist/
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Database
+data/
+*.db
+*.db-wal
+*.db-shm
+accounts.json
+accounts.json.bak
+
+# Browser profiles (session data)
+kimi_profiles/
+
+# Logs
+*.log
+
+# Coverage & cache
+coverage/
+.cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+*.bak
+*.bak.*
+
+# Sessão exportada (token + cookies) — CREDENCIAL DE ACESSO TOTAL À CONTA.
+# NUNCA em repositório público.
+kimi_session.json
+
+# Captura de recon (DevTools) — contém headers/token de sessão. NUNCA versionar.
+recon-capture.jsonl
+recon-*.jsonl

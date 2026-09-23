@@ -1,0 +1,29 @@
+services:
+  glmproxy:
+    build: .
+    container_name: glmproxy
+    ports:
+      - "${PORT:-3002}:3002"
+    # .env é opcional: os defaults do config já apontam pro z.ai. A auth vem do
+    # glm_session.json (copiado na imagem). Defina API_KEY no .env se quiser
+    # proteger o proxy.
+    env_file:
+      - path: .env
+        required: false
+    # Container NUNCA tem display -> força headless, sobrepondo qualquer
+    # HEADLESS=false que venha do .env (usado só pro login local com tela).
+    environment:
+      - HEADLESS=true
+    volumes:
+      - glm_data:/app/data
+      - glm_profiles:/app/glm_profiles
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  glm_data:
+  glm_profiles:

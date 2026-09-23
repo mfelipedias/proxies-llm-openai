@@ -1,0 +1,38 @@
+# Dependências (cada proxy tem o seu próprio)
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Configurações locais do Claude Code
+.claude/
+
+# ---------------------------------------------------------------------------
+# Segredos e sessões — NUNCA versionar (use .env.example como referência).
+# Rede de segurança global: vale para todos os subprojetos, mesmo que o
+# .gitignore local de algum deles seja alterado.
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+
+# Perfis de navegador (cookies e sessões logadas)
+*_profiles/
+
+# Sessões exportadas (token + cookies — acesso total à conta)
+*_session.json
+profiles_seed.tar.gz
+
+# Bancos de contas (e-mail + senha em texto puro)
+data/
+*.db
+*.db-wal
+*.db-shm
+accounts.json
+accounts.json.bak
+
+# Capturas de engenharia reversa (podem conter headers/tokens)
+recon-*.jsonl
+discover-dump.json
+discover-sse.txt

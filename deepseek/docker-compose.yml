@@ -1,0 +1,25 @@
+services:
+  deepseekproxy:
+    build: .
+    container_name: deepseekproxy
+    ports:
+      - "${PORT:-3001}:3001"
+    env_file:
+      - .env
+    # Volumes nomeados (gerenciados pelo Docker) — evitam o erro de "File Sharing"
+    # do Docker Desktop no macOS com paths fora das pastas compartilhadas.
+    # Para usar pastas do host, troque por bind mounts e habilite o path em
+    # Docker Desktop -> Settings -> Resources -> File Sharing.
+    volumes:
+      - ds_data:/app/data
+      - ds_profiles:/app/deepseek_profiles
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  ds_data:
+  ds_profiles:
